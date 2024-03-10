@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "ndUH0jjAKb3xPbnWz2w70UeA7StK6Tz9E4Erxm2dMJ1hgwSlh6YYAnaGNKVo96zCUADTQQnrViDIpOyNxfmezA==",
+  "success": true,
+  "projectFilePath": "/home/cheeryphantom/Desktop/Sujal/sem6/NCC/Lab1/Lab1.csproj",
+  "expectedPackageFiles": [
+    "/home/cheeryphantom/.nuget/packages/microsoft.netcore.app.ref/6.0.20/microsoft.netcore.app.ref.6.0.20.nupkg.sha512",
+    "/home/cheeryphantom/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.20/microsoft.aspnetcore.app.ref.6.0.20.nupkg.sha512",
+    "/home/cheeryphantom/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.20/microsoft.netcore.app.host.linux-x64.6.0.20.nupkg.sha512"
+  ],
+  "logs": []
+}
