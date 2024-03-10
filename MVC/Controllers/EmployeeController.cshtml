@@ -1,0 +1,23 @@
+using Microsoft.AspNetCore.Mvc;
+using MVC.Models;
+
+namespace MVC.Controllers
+{
+    [Route("[controller]")]
+    public class EmployeeController : Controller
+    {
+        private GetEmployees employees1 = new GetEmployees();
+
+        public IActionResult Index()
+        {
+            return View(employees1.GetEmployeeList());
+        }
+
+        [HttpGet("details/{id}")] // url will be /Employee/details/{id}
+        public IActionResult Details(int id)
+        {
+            var employee = employees1.GetEmployeeList().Find(emp => emp.ID == id);
+            return View(employee);
+        }
+    }
+}
