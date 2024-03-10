@@ -1,0 +1,22 @@
+<!-- Index.cshtml -->
+@model List<EmployeeModel>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.ID</td>
+                <td>@employee.Name</td>
+                <td>@employee.Address</td>
+            </tr>
+        }
+    </tbody>
+</table>
