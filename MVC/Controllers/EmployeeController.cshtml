@@ -6,17 +6,24 @@ namespace MVC.Controllers
     [Route("[controller]")]
     public class EmployeeController : Controller
     {
-        private GetEmployees employees1 = new GetEmployees();
+        private readonly GetEmployees _employees = new GetEmployees();
+        private readonly Department _departments = new Department();
 
         public IActionResult Index()
         {
-            return View(employees1.GetEmployeeList());
+            var employeesWithDepartments = _employees.GetEmployeeList()
+                .Select(emp =>
+                {
+                    emp.Department = _departments.GetDepartmentById(emp.Dept_ID);
+                    return emp;
+                }).ToList();
+            return View(employeesWithDepartments);
         }
 
         [HttpGet("details/{id}")] // url will be /Employee/details/{id}
         public IActionResult Details(int id)
         {
-            var employee = employees1.GetEmployeeList().Find(emp => emp.ID == id);
+            var employee = _employees.GetEmployeeList().Find(emp => emp.ID == id);
             return View(employee);
         }
     }
