@@ -27,5 +27,22 @@ namespace MVC.Controllers
             employee.Department = _departments.GetDepartmentById(employee.Dept_ID);
             return View(employee);
         }
+
+        [HttpGet("Add")] // url will be /Employee/addemployee
+        public IActionResult AddEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddEmployee(EmployeeModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                employeeList.Add(model);
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
 }
