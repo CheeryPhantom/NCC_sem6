@@ -1,0 +1,20 @@
+<!-- Index.cshtml -->
+@model List<DepartmentModel>
+
+<table>
+    <thead>
+        <tr>
+            <th>Department Id</th>
+            <th>Department Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var department in Model)
+        {
+            <tr>
+                <td>@department.Dept_ID</td>
+                <td>@department.Dept_Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
