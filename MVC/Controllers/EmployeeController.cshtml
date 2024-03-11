@@ -24,6 +24,7 @@ namespace MVC.Controllers
         public IActionResult Details(int id)
         {
             var employee = _employees.GetEmployeeList().Find(emp => emp.ID == id);
+            employee.Department = _departments.GetDepartmentById(employee.Dept_ID);
             return View(employee);
         }
     }
