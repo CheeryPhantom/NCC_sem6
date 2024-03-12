@@ -12,6 +12,7 @@ namespace MVC
 
         public GetEmployees()
         {
+            employees.Clear();
             employees.Add(
                 new EmployeeModel { ID = 1, Name = "Bill Gates", Address = "Patan", Dept_ID = 1 }
             );
