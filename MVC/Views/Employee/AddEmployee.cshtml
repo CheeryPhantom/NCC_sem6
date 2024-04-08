@@ -1,20 +1,28 @@
-<!-- Add.cshtml -->
 @model MVC.Models.EmployeeModel
 
-<h2>Add New Employee</h2>
-<br>
-<form asp-action="Add" method="post">
+@using (var form = Html.BeginForm())
+{
+    <h2>Add New Employee</h2>
+    <br>
+    <form asp-action="Add" method="post">
     <div>
         <label asp-for="Name">Name:</label>
         <input asp-for="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div><br>
     <div>
         <label asp-for="Address">Address:</label>
         <input asp-for="Address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
     </div><br>
     <div>
-        <label asp-for="Dept_ID">Department ID:</label>
-        <input asp-for="Dept_ID" />
+        <label asp-for="Dept_ID">Department:</label>
+        <select asp-for="Dept_ID" class="form-control" asp-items="ViewBag.Departments">
+        </select>
+        <span asp-validation-for="Dept_ID" class="text-danger"></span>
     </div><br>
-    <button type="submit">Submit</button>
+    <input type="submit" calue="Create" class="btn btn-primary">
 </form>
+}
+<br>
+@Html.ActionLink("Back to Employee List", "Index", null, new { @class = "btn btn-secondary" })
