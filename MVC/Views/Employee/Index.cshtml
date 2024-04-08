@@ -1,5 +1,5 @@
 <!-- Index.cshtml -->
-@model List<EmployeeModel>
+@model IEnumerable<EmployeeModel>
 
 <table>
     <thead>
@@ -17,7 +17,7 @@
                 <td>@employee.ID</td>
                 <td>@employee.Name</td>
                 <td>@employee.Address</td>
-                <td>@(employee.Department != null ? employee.Department.Dept_Name : "Unknown")</td>
+                <td>@employee.Dept_ID</td>
                 <td></td>
             </tr>
         }
