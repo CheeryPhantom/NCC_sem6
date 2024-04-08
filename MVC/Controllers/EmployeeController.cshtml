@@ -6,43 +6,52 @@ namespace MVC.Controllers
     [Route("[controller]")]
     public class EmployeeController : Controller
     {
-        private readonly GetEmployees _employees = new GetEmployees();
-        private readonly Department _departments = new Department();
+        private readonly GetEmployees _employees;
+        private readonly Department _departments;
+        private static List<EmployeeModel> _employeeList = new List<EmployeeModel>();
 
+        public EmployeeController()
+        {
+            _employees = new GetEmployees();
+
+            _departments = new Department();
+
+            if (_employeeList.Count == 0) _employeeList = _employees.GetEmployeeList();
+
+
+        }
         public IActionResult Index()
         {
-            var employeesWithDepartments = _employees.GetEmployeeList()
-                .Select(emp =>
-                {
-                    emp.Department = _departments.GetDepartmentById(emp.Dept_ID);
-                    return emp;
-                }).ToList();
-            return View(employeesWithDepartments);
+
+            return View(_employeeList);
         }
 
         [HttpGet("details/{id}")] // url will be /Employee/details/{id}
         public IActionResult Details(int id)
         {
-            var employee = _employees.GetEmployeeList().Find(emp => emp.ID == id);
-            employee.Department = _departments.GetDepartmentById(employee.Dept_ID);
+            var employee = _employees.GetEmployeeById(id);
             return View(employee);
         }
 
-        [HttpGet("Add")] // url will be /Employee/addemployee
+        [HttpGet("Add")]
         public IActionResult AddEmployee()
         {
+            ViewBag.Departments = _departments.getDSO();
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AddEmployee(EmployeeModel model)
+        [HttpPost("Add")]
+        public IActionResult AddEmployee(EmployeeModel employee)
         {
             if (ModelState.IsValid)
             {
-                employeeList.Add(model);
-                return RedirectToAction("Index");
+                employee.ID = _employeeList.Any() ? _employeeList.Max(e => e.ID) + 1 : 1;
+                _employeeList.Add(employee);
+                return Content($"User {employee.Name} added!");
             }
-            return View();
+            ViewBag.Departments = _departments.getDSO();
+            return View(employee);
+
         }
     }
 }
