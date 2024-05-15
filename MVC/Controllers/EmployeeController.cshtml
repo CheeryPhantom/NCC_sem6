@@ -6,30 +6,26 @@ namespace MVC.Controllers
     [Route("[controller]")]
     public class EmployeeController : Controller
     {
-        private readonly GetEmployees _employees;
+
+        private EDBcontext db;
         private readonly Department _departments;
-        private static List<EmployeeModel> _employeeList = new List<EmployeeModel>();
 
-        public EmployeeController()
+        public EmployeeController(EDBcontext _db, Department _dp)
         {
-            _employees = new GetEmployees();
-
-            _departments = new Department();
-
-            if (_employeeList.Count == 0) _employeeList = _employees.GetEmployeeList();
-
+            db = _db;
+            _departments = _dp;
 
         }
         public IActionResult Index()
         {
-
-            return View(_employeeList);
+            var employees = db.Employees.ToList();
+            return View(employees);
         }
 
         [HttpGet("details/{id}")] // url will be /Employee/details/{id}
         public IActionResult Details(int id)
         {
-            var employee = _employees.GetEmployeeById(id);
+            var employee = db.Employees.Find(id);
             return View(employee);
         }
 
@@ -43,15 +39,28 @@ namespace MVC.Controllers
         [HttpPost("Add")]
         public IActionResult AddEmployee(EmployeeModel employee)
         {
-            if (ModelState.IsValid)
-            {
-                employee.ID = _employeeList.Any() ? _employeeList.Max(e => e.ID) + 1 : 1;
-                _employeeList.Add(employee);
-                return Content($"User {employee.Name} added!");
-            }
-            ViewBag.Departments = _departments.getDSO();
-            return View(employee);
-
+            db.Employees.Add(employee);
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet("edit/{id}")]
+        public IActionResult EditEmployee(int id)
+        {
+            ViewBag.Departments = _departments.getDSO();
+            var employee = db.Employees.Find(id);
+            return View(employee);
+        }
+
+        [HttpPost("edit")]
+        public IActionResult EditEmployee(EmployeeModel employee)
+        {
+            ViewBag.Departments = _departments.getDSO();
+            db.Employees.Attach(employee);
+            db.Employees.Update(employee);
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
